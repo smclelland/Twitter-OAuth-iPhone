@@ -83,6 +83,10 @@ static NSString* const kGGTwitterLoadingBackgroundImage = @"twitter_load.png";
 	return [SA_OAuthTwitterController controllerToEnterCredentialsWithTwitterEngine: engine delegate: delegate forOrientation: UIInterfaceOrientationPortrait];
 }
 
+-(void)viewWillDisappear:(BOOL)animated {
+    if ([_delegate respondsToSelector: @selector(OAuthTwitterControllerUnload:)]) [_delegate OAuthTwitterControllerUnload: self];
+}
+
 
 + (BOOL) credentialEntryRequiredWithTwitterEngine: (SA_OAuthTwitterEngine *) engine {
 	return ![engine isAuthorized];

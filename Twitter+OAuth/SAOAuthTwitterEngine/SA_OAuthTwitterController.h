@@ -18,6 +18,7 @@
 - (void) OAuthTwitterController: (SA_OAuthTwitterController *) controller authenticatedWithUsername: (NSString *) username;
 - (void) OAuthTwitterControllerFailed: (SA_OAuthTwitterController *) controller;
 - (void) OAuthTwitterControllerCanceled: (SA_OAuthTwitterController *) controller;
+- (void) OAuthTwitterControllerUnload: (SA_OAuthTwitterController *) controller;
 @end
 
 
@@ -44,5 +45,6 @@
 + (SA_OAuthTwitterController *) controllerToEnterCredentialsWithTwitterEngine: (SA_OAuthTwitterEngine *) engine delegate: (id <SA_OAuthTwitterControllerDelegate>) delegate forOrientation:(UIInterfaceOrientation)theOrientation;
 + (SA_OAuthTwitterController *) controllerToEnterCredentialsWithTwitterEngine: (SA_OAuthTwitterEngine *) engine delegate: (id <SA_OAuthTwitterControllerDelegate>) delegate;
 + (BOOL) credentialEntryRequiredWithTwitterEngine: (SA_OAuthTwitterEngine *) engine;
+- (void) pasteboardChanged: (NSNotification *) note;
 
 @end
