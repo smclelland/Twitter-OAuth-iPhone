@@ -59,9 +59,9 @@ static NSString* const kGGTwitterLoadingBackgroundImage = @"twitter_load.png";
 
 - (void) dealloc {
 	[_backgroundView release];
-	
+
 	[[NSNotificationCenter defaultCenter] removeObserver: self];
-	_webView.delegate = nil;
+//	_webView.delegate = nil;
 	[_webView loadRequest: [NSURLRequest requestWithURL: [NSURL URLWithString: @""]]];
 	[_webView release];
 	
