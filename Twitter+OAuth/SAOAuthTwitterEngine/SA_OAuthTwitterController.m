@@ -16,9 +16,6 @@
 
 #import "SA_OAuthTwitterController.h"
 
-// Constants
-static NSString* const kGGTwitterLoadingBackgroundImage = @"twitter_load.png";
-
 @interface SA_OAuthTwitterController ()
 @property (nonatomic, readonly) UIToolbar *pinCopyPromptBar;
 @property (nonatomic, readwrite) UIInterfaceOrientation orientation;
@@ -144,7 +141,12 @@ static NSString* const kGGTwitterLoadingBackgroundImage = @"twitter_load.png";
 - (void) loadView {
 	[super loadView];
 
-	_backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:kGGTwitterLoadingBackgroundImage]];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        _backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"twitter_load~ipad.png"]];
+    } else {
+        _backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"twitter_load.png"]];
+    }
+    
 	if ( UIInterfaceOrientationIsLandscape( self.orientation ) ) {
 		self.view = [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 480, 288)] autorelease];	
 		_backgroundView.frame =  CGRectMake(0, 44, 480, 288);
@@ -152,7 +154,9 @@ static NSString* const kGGTwitterLoadingBackgroundImage = @"twitter_load.png";
 		_navBar = [[[UINavigationBar alloc] initWithFrame: CGRectMake(0, 0, 480, 32)] autorelease];
 	} else {
 		self.view = [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 320, 460)] autorelease];	
+        
 		_backgroundView.frame =  CGRectMake(0, 44, 320, 416);
+        
 		_navBar = [[[UINavigationBar alloc] initWithFrame: CGRectMake(0, 0, 320, 44)] autorelease];
 	}
 	_navBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
@@ -171,22 +175,24 @@ static NSString* const kGGTwitterLoadingBackgroundImage = @"twitter_load.png";
 	_blockerView.clipsToBounds = YES;
 	if ([_blockerView.layer respondsToSelector: @selector(setCornerRadius:)]) [(id) _blockerView.layer setCornerRadius: 10];
 	
-	UILabel								*label = [[[UILabel alloc] initWithFrame: CGRectMake(0, 5, _blockerView.bounds.size.width, 15)] autorelease];
-	label.text = NSLocalizedString(@"Please Wait…", nil);
+	UILabel *label = [[[UILabel alloc] initWithFrame: CGRectMake(0, 5, _blockerView.bounds.size.width, 15)] autorelease];
+	label.text = NSLocalizedString(@"Wait!", nil);
 	label.backgroundColor = [UIColor clearColor];
 	label.textColor = [UIColor whiteColor];
 	label.textAlignment = UITextAlignmentCenter;
 	label.font = [UIFont boldSystemFontOfSize: 15];
 	[_blockerView addSubview: label];
 	
-	UIActivityIndicatorView				*spinner = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleWhite] autorelease];
+	UIActivityIndicatorView	*spinner = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleWhite] autorelease];
 	
 	spinner.center = CGPointMake(_blockerView.bounds.size.width / 2, _blockerView.bounds.size.height / 2 + 10);
 	[_blockerView addSubview: spinner];
 	[self.view addSubview: _blockerView];
 	[spinner startAnimating];
 	
-	UINavigationItem				*navItem = [[[UINavigationItem alloc] initWithTitle: NSLocalizedString(@"Twitter Info", nil)] autorelease];
+	UINavigationItem *navItem = [[[UINavigationItem alloc] initWithTitle: NSLocalizedString(@"Twitter", nil)] autorelease];
+    _navBar.barStyle = UIBarStyleBlackOpaque;
+    
 	navItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCancel target: self action: @selector(cancel:)] autorelease];
 	
 	[_navBar pushNavigationItem: navItem animated: NO];
