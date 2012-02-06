@@ -11,7 +11,7 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
-
+#import "AppHelper.h"
 #import "SA_OAuthTwitterEngine.h"
 
 #import "SA_OAuthTwitterController.h"
