@@ -170,7 +170,7 @@
 	
 	_blockerView = [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 200, 60)] autorelease];
 	_blockerView.backgroundColor = [UIColor colorWithWhite: 0.0 alpha: 0.8];
-	_blockerView.center = CGPointMake(self.view.bounds.size.width / 2, self.view.bounds.size.height / 2);
+   	_blockerView.center = CGPointMake(self.view.bounds.size.width / 2, self.view.bounds.size.height / 2);
 	_blockerView.alpha = 0.0;
 	_blockerView.clipsToBounds = YES;
 	if ([_blockerView.layer respondsToSelector: @selector(setCornerRadius:)]) [(id) _blockerView.layer setCornerRadius: 10];
@@ -187,7 +187,7 @@
 	
 	spinner.center = CGPointMake(_blockerView.bounds.size.width / 2, _blockerView.bounds.size.height / 2 + 10);
 	[_blockerView addSubview: spinner];
-	[self.view addSubview: _blockerView];
+   	[self.view addSubview: _blockerView];
 	[spinner startAnimating];
 	
 	UINavigationItem *navItem = [[[UINavigationItem alloc] initWithTitle: NSLocalizedString(@"Twitter", nil)] autorelease];
@@ -206,7 +206,14 @@
 
 - (void) didRotateFromInterfaceOrientation: (UIInterfaceOrientation) fromInterfaceOrientation {
 	self.orientation = self.interfaceOrientation;
-	_blockerView.center = CGPointMake(self.view.bounds.size.width / 2, self.view.bounds.size.height / 2);
+    CGPoint center = CGPointMake((self.view.bounds.size.width / 2),self.view.bounds.size.height / 2);
+    if ([Config deviceIsPad]) {
+        CGSize screenSize = [[UIScreen mainScreen] bounds].size;
+        // offset is used to position the waiting activity label above the art on ipad
+        CGPoint posOffset = CGPointMake(14, 14);
+        center = CGPointMake((screenSize.height / 4) + posOffset.x,(screenSize.width / 4) - posOffset.y);
+    }
+    _blockerView.center = center;
 //	[self performInjection];			//removed due to twitter update
 }
 
