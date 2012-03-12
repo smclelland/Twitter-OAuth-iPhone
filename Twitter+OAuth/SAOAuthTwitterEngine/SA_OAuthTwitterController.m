@@ -200,6 +200,15 @@
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    CGPoint center = CGPointMake((self.view.bounds.size.width / 2),self.view.bounds.size.height / 2);
+    if ([Config deviceIsPad]) {
+        CGSize screenSize = [[UIScreen mainScreen] bounds].size;
+        // offset is used to position the waiting activity label above the art on ipad
+        CGPoint posOffset = CGPointMake(14, 14);
+        center = CGPointMake((screenSize.height / 4) + posOffset.x,(screenSize.width / 4) - posOffset.y);
+    }
+    _blockerView.center = center;
+
     return (interfaceOrientation == UIInterfaceOrientationLandscapeRight || interfaceOrientation == UIInterfaceOrientationLandscapeLeft );
    // return YES;
 }
