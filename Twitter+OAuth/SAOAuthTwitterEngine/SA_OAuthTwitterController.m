@@ -142,7 +142,7 @@
 	[super loadView];
 
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        _backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"twitter_load~ipad.png"]];
+        _backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"twitter_load-ipad.png"]];
     } else {
         _backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"twitter_load.png"]];
     }
